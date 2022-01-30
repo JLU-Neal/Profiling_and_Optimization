@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import static tech.tablesaw.aggregate.AggregateFunctions.max;
 
 public class App {
-    private static boolean offline = true; // set to false to live-download dataset
+    private static boolean offline = false; // set to false to live-download dataset
 
     public static void main(String[] args) {
         try {
