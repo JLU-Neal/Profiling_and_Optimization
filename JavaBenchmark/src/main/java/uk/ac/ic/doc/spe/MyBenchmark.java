@@ -31,11 +31,83 @@
 
 package uk.ac.ic.doc.spe;
 
-import org.openjdk.jmh.annotations.Benchmark;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 
+import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.Options;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+;
+import tech.tablesaw.api.IntColumn;
+import tech.tablesaw.api.StringColumn;
+
+import tech.tablesaw.api.Table;
+
+import tech.tablesaw.table.TableSliceGroup;
+
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(1)
+@State(Scope.Benchmark)
 public class MyBenchmark {
+    static boolean offline = true;
+    static Table input;
+
+//    static double[] cuteness = {90.1, 84.3, 99.7};
+
+    @Param({"1", "10", "100", "1000", "10000"})
+    public int repeat;
+
+    @Setup
+    public void setUp(){
+        try{
+            //benchmarks should not depend on external data.
+            System.out.println("Repeat param: " + repeat);
+            Random random = new Random();
+
+            int[] repeatedAnimals = new int[repeat];
+            for(int i = 0 ; i < repeat; i++){
+                repeatedAnimals[i] = random.nextInt();
+            }
+            System.out.println("Array Length: "+repeatedAnimals.length);
+
+            input = Table.create("Cute Animals")
+                    .addColumns(
+                            IntColumn.create("Animal types", repeatedAnimals));
+
+
+        }catch(Exception exception){
+            System.out.println("Error " + exception.getMessage());
+            exception.printStackTrace();
+        }
+    }
+
+
+    public MyBenchmark(){
+        
+    }
     @Benchmark
     public void testMethod() {
+        TableSliceGroup ret = input.splitOn("Animal types");
+//        System.out.println("=====]====================");
+//        System.out.println(ret.asTableList());
+    }
+
+    public static void main(String[] args) throws RunnerException {
+        Options opt = new OptionsBuilder()
+                .include(MyBenchmark.class.getSimpleName())
+//                .param("arg", "41", "42") // Use this to selectively constrain/override parameters
+                .build();
+
+        new Runner(opt).run();
     }
 }
