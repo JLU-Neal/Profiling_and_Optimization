@@ -1,0 +1,9 @@
+Top Hotspots
+    Function	Module	CPU Time	% of CPU Time
+    tech::tablesaw::joining::DataFrameJoiner::crossProduct	[Compiled Java code]	1.652s	6.0%
+    tech::tablesaw::table::StandardTableSliceGroup::splitOn	[Compiled Java code]	1.544s	5.6%
+    Interpreter	[Dynamic code]	1.075s	3.9%
+    itable stub	[Dynamic code]	0.732s	2.7%
+    tech::tablesaw::columns::dates::DateColumnFormatter::format	[Compiled Java code]	0.694s	2.5%
+    [Others]	N/A*	21.673s	79.2%
+
