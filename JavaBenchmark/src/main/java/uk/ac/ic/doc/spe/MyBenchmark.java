@@ -44,7 +44,6 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-;
 import tech.tablesaw.api.IntColumn;
 import tech.tablesaw.api.StringColumn;
 
@@ -61,29 +60,39 @@ import tech.tablesaw.table.TableSliceGroup;
 public class MyBenchmark {
     static boolean offline = true;
     static Table input;
+    static String[] colsName = {"Animal types", "Animal Ages"};
 
-//    static double[] cuteness = {90.1, 84.3, 99.7};
+    //    static double[] cuteness = {90.1, 84.3, 99.7};
 
-    @Param({"1", "10", "100", "1000", "10000"})
-    public int repeat;
+    @Param({"10", "100", "1000", "10000"})
+    public int rows;
+
+    @Param({"1", "2"})
+    public int cols;
 
     @Setup
     public void setUp(){
         try{
             //benchmarks should not depend on external data.
-            System.out.println("Repeat param: " + repeat);
+            System.out.println("Repeat param: " + rows);
             Random random = new Random();
 
-            int[] repeatedAnimals = new int[repeat];
-            for(int i = 0 ; i < repeat; i++){
-                repeatedAnimals[i] = random.nextInt();
+            int[] repeatedAnimals = new int[rows];
+            int[] repeatedAges = new int[rows];
+            for(int i = 0 ; i < rows; i++){
+                // repeatedAnimals[i] = random.nextInt();
+                repeatedAnimals[i] = i % 2;
+                repeatedAges[i] = i % 3;
             }
             System.out.println("Array Length: "+repeatedAnimals.length);
 
             input = Table.create("Cute Animals")
                     .addColumns(
-                            IntColumn.create("Animal types", repeatedAnimals));
-
+                            IntColumn.create(colsName[0], repeatedAnimals)
+                    ).addColumns(
+                            IntColumn.create(colsName[1], repeatedAges)
+                    );
+            
 
         }catch(Exception exception){
             System.out.println("Error " + exception.getMessage());
@@ -97,9 +106,13 @@ public class MyBenchmark {
     }
     @Benchmark
     public void testMethod() {
-        TableSliceGroup ret = input.splitOn("Animal types");
-//        System.out.println("=====]====================");
-//        System.out.println(ret.asTableList());
+        String[] colums = new String[this.cols];
+        for(int i = 0; i < this.cols; i++){
+            colums[i] = colsName[i];
+        }
+        TableSliceGroup ret = input.splitOn(colums);
+        // System.out.println("=====]====================");
+        // System.out.println(ret.asTableList());
     }
 
     public static void main(String[] args) throws RunnerException {
