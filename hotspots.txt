@@ -7,3 +7,25 @@ Top Hotspots
     tech::tablesaw::columns::dates::DateColumnFormatter::format	[Compiled Java code]	0.694s	2.5%
     [Others]	N/A*	21.673s	79.2%
 
+Benchmark               (cols)  (rows)  Mode  Cnt        Score       Error  Units
+MyBenchmark.testMethod       1      10  avgt    5     2065.677 ±   231.833  ns/op
+MyBenchmark.testMethod       1     100  avgt    5    16763.541 ±   597.656  ns/op
+MyBenchmark.testMethod       1    1000  avgt    5   158350.064 ± 10419.348  ns/op
+MyBenchmark.testMethod       1   10000  avgt    5  1567431.833 ± 60222.392  ns/op
+MyBenchmark.testMethod       2      10  avgt    5     3041.238 ±   144.913  ns/op
+MyBenchmark.testMethod       2     100  avgt    5    27247.357 ±  1932.197  ns/op
+MyBenchmark.testMethod       2    1000  avgt    5   250527.574 ± 14913.931  ns/op
+MyBenchmark.testMethod       2   10000  avgt    5  2500189.571 ± 94301.105  ns/op
+
+
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations
+-----------------------------------------------------------------
+DummyBenchmark/1/10          1517 ns         1517 ns       449961
+DummyBenchmark/1/100         9164 ns         9164 ns        75003
+DummyBenchmark/1/1000       81270 ns        81270 ns         8692
+DummyBenchmark/1/10000     804354 ns       804349 ns          885
+DummyBenchmark/2/10          2247 ns         2247 ns       311194
+DummyBenchmark/2/100        15297 ns        15297 ns        45517
+DummyBenchmark/2/1000      142263 ns       142248 ns         4977
+DummyBenchmark/2/10000    1402974 ns      1402914 ns          495

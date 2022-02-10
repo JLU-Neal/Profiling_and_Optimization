@@ -10,6 +10,8 @@ static int cnt = 0;
 
 static void DoSetup(const benchmark::State& state) {
   table = Table();
+  // cout<<"SETUP"<<endl;
+  
   int cols = state.range(0);
   int rows = state.range(1);
   
@@ -29,14 +31,12 @@ static void DummyBenchmark(benchmark::State& state) {
   for (auto _ : state){
     // cout<<cnt<<endl;
     // cnt++;
-    int splitOnCols[state.range(0)];
+    vector<int> splitOnCols;
     for(int i = 0; i < state.range(0); i++){
-      splitOnCols[i] = i;
+      splitOnCols.push_back(i);
     }
-    int size = (sizeof(splitOnCols)/sizeof(splitOnCols));
-    cout<<size<<endl;
-    vector<Table> subTable = table.splitOn(splitOnCols);
-    // vector<Table>:: iterator itr;
+    vector<SlicedTable> subTable(table.splitOn(splitOnCols));
+    vector<SlicedTable>:: iterator itr;
     // cout<<"start iteration"<<endl;
     // for (itr = subTable.begin(); itr != subTable.end(); itr++)
     // {
@@ -48,6 +48,7 @@ static void DummyBenchmark(benchmark::State& state) {
   }
   
 }
-BENCHMARK(DummyBenchmark)->Args({1, 100})->Args({1, 1000})->Args({1, 10000})->Args({2, 100})->Args({2, 1000})->Args({2, 10000})->Setup(DoSetup); // NOLINT
+BENCHMARK(DummyBenchmark)->Args({1, 10})->Args({1, 100})->Args({1, 1000})->Args({1, 10000})->Args({2, 10})->Args({2, 100})->Args({2, 1000})->Args({2, 10000})->Setup(DoSetup); // NOLINT
+// BENCHMARK(DummyBenchmark)->Args({1, 10})->Setup(DoSetup); // NOLINT
 
 BENCHMARK_MAIN();

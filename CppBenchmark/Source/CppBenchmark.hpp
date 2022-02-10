@@ -2,9 +2,26 @@
 #include <vector>
 #include <iostream>
 #include<sstream>
+#include<numeric>
+#include<string>
 using namespace std;
 
 void printHelloWorld();
+
+class SlicedTable
+{
+private:
+    /* data */
+    string sliceName;
+    vector<int>* groupedRows;
+public:
+    SlicedTable();
+    SlicedTable(string sliceName, vector<int>* groupedRows);
+    SlicedTable(const SlicedTable& stb);
+    string toString();
+    ~SlicedTable();
+};
+
 class Table
 {
 private:
@@ -15,8 +32,10 @@ public:
     Table(vector<vector<int>>* table);
     void addRow(vector<int> row);
     string toString();
-    vector<Table> splitOn(int cols[]);
+    vector<SlicedTable> splitOn(vector<int>& cols);
     ~Table();
 };
+
+
 
 

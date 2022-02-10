@@ -26,10 +26,13 @@ string Table::toString(){
     stringstream ss;
     vector<vector<int>>::iterator rowPtr;
     ss<<"========="<<endl;
+    // cout<<this->table->size()<<endl;
     for(rowPtr = this->table->begin(); rowPtr < this->table->end(); rowPtr++){
         vector<int> row = *rowPtr;
         vector<int>::iterator elePtr;
+        // cout<<row.size()<<endl;
         for(elePtr = row.begin(); elePtr < row.end(); elePtr++){
+            ss<<"Row elements: "<<endl;
             ss<<*elePtr<<"   ";
         }
         ss<<endl;
@@ -38,39 +41,39 @@ string Table::toString(){
     return ss.str();
 }
 
-vector<Table> Table::splitOn(int cols[])
+vector<SlicedTable> Table::splitOn(vector<int>& cols)
 {
     // cout<<"Start Splitting~"<<endl;
-    vector<vector<int>>::iterator rowPtr;
-    unordered_map<string, vector<vector<int>>> subTables;
-    for(rowPtr = this->table->begin(); rowPtr < this->table->end(); rowPtr++){
-        vector<int> row = *rowPtr;
-        stringstream ss;
-        int size = (sizeof(cols)/sizeof(*cols));
-        cout<<size<<endl;
-        cout<<row.size()<<endl;
-        for(int i = 0; i < size; i++){
-            ss<<row[cols[i]]<<":";
+   
+    unordered_map<string, vector<int>> subTables;
+    // cout<<table->size()<<endl;
+    for(int idx = 0; idx < this->table->size(); idx++){
+        // cout<<idx<<endl;
+        vector<int>& row = this->table->at(idx);
+        // stringstream ss;
+        string key="";
+        for(int i = 0; i < cols.size(); i++){
+            // ss<<row[cols[i]]<<":";
+            key+=to_string(row[cols[i]]);
         }
-        // ss<<row[0]<<":"<<row[1];
-        string key = ss.str();
+        // string key = ss.str();
         if(subTables.find(key)!=subTables.end())
         {
-            subTables.at(key).push_back(row);
+            subTables.at(key).push_back(idx);
         }else{
-            vector<vector<int>> subTable;
-            subTable.push_back(row);
+            vector<int> subTable;
+            subTable.push_back(idx);
             subTables[key] = subTable;
         }
     }
     // cout<<"Split done"<<endl;
     // cout<<"split size:"<<subTables.size()<<endl;
-    vector<Table> splitedTables;
-    unordered_map<string, vector<vector<int>>>:: iterator itr;
+    vector<SlicedTable> splitedTables;
+    unordered_map<string, vector<int>>:: iterator itr;
     for (itr = subTables.begin(); itr != subTables.end(); itr++)
     {
         // cout<<"key: "<<itr->first<<endl;
-        vector<vector<int>> rows = itr->second;
+        vector<int>& rows = itr->second;
         // cout<<"rows: "<<endl;
         // for(int i = 0; i < rows.size(); i++){
         //     for(int j = 0; j < rows[i].size(); j++){
@@ -78,16 +81,61 @@ vector<Table> Table::splitOn(int cols[])
         //     }
         //     cout<<endl;
         // }
-        Table table(&(rows));
-        splitedTables.push_back(table);
-        // cout<<"Get table" <<endl;
-        // cout<<rows.size()<<endl;
-        // cout<< table.toString()<<endl;
+        // Table table(&(rows));
+        SlicedTable stb(itr->first, &(rows));
+        splitedTables.push_back(stb);
+        
+        // cout<<stb.toString()<<endl;
     }
+
+
+
+    vector<SlicedTable>:: iterator iter;
+    // cout<<"start iteration"<<endl;
+    // for (iter = splitedTables.begin(); iter != splitedTables.end(); iter++)
+    // {
+    //   cout<<iter->toString()<<endl;
+    // }
     return splitedTables;
 }
 
 Table::~Table()
 {
-    
+    // cout<<"destruct"<<endl;
+}
+
+SlicedTable::SlicedTable()
+{
+
+}
+
+SlicedTable::SlicedTable(string sliceName, vector<int>* groupedRows)
+{
+    this->sliceName = sliceName;
+    this-> groupedRows = groupedRows;
+}
+
+SlicedTable::SlicedTable(const SlicedTable& stb)
+{
+    this->sliceName = stb.sliceName;
+    this->groupedRows = new vector<int>(stb.groupedRows->begin(), stb.groupedRows->end());
+}
+
+string SlicedTable::toString()
+{
+    vector<int>::iterator itr;
+    stringstream ss;
+    ss<<this->sliceName<<endl;
+    ss<<"============="<<endl;
+    for(itr = this->groupedRows->begin(); itr != this->groupedRows->end(); itr++)
+    {
+        ss<<"row: "<<*itr<<endl;
+    }
+    ss<<"============="<<endl;
+    return ss.str();
+}
+
+SlicedTable::~SlicedTable()
+{
+
 }
