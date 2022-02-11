@@ -21,11 +21,23 @@ MyBenchmark.testMethod       2   10000  avgt    5  2500189.571 ± 94301.105  ns/
 -----------------------------------------------------------------
 Benchmark                       Time             CPU   Iterations
 -----------------------------------------------------------------
-DummyBenchmark/1/10          1517 ns         1517 ns       449961
-DummyBenchmark/1/100         9164 ns         9164 ns        75003
-DummyBenchmark/1/1000       81270 ns        81270 ns         8692
-DummyBenchmark/1/10000     804354 ns       804349 ns          885
-DummyBenchmark/2/10          2247 ns         2247 ns       311194
-DummyBenchmark/2/100        15297 ns        15297 ns        45517
-DummyBenchmark/2/1000      142263 ns       142248 ns         4977
-DummyBenchmark/2/10000    1402974 ns      1402914 ns          495
+DummyBenchmark/1/10          1302 ns         1302 ns       535513
+DummyBenchmark/1/100         9213 ns         9213 ns        75989
+DummyBenchmark/1/1000       83557 ns        83556 ns         8382
+DummyBenchmark/1/10000     826482 ns       826478 ns          846
+DummyBenchmark/2/10          2057 ns         2057 ns       340350
+DummyBenchmark/2/100        15812 ns        15812 ns        44315
+DummyBenchmark/2/1000      148120 ns       148121 ns         4729
+DummyBenchmark/2/10000    1465546 ns      1465529 ns          478
+
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations
+-----------------------------------------------------------------
+DummyBenchmark/1/10          1513 ns         1513 ns       444276
+DummyBenchmark/1/100         9149 ns         9149 ns        75185
+DummyBenchmark/1/1000       81351 ns        81349 ns         8800
+DummyBenchmark/1/10000     788797 ns       788728 ns          886
+DummyBenchmark/2/10          2212 ns         2212 ns       318854
+DummyBenchmark/2/100        15237 ns        15237 ns        46259
+DummyBenchmark/2/1000      142580 ns       142575 ns         4976
+DummyBenchmark/2/10000    1424555 ns      1424351 ns          501
