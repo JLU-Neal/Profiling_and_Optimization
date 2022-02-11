@@ -33,14 +33,14 @@ static void DummyBenchmark(benchmark::State& state) {
     // cnt++;
     vector<int> splitOnCols;
     for(int i = 0; i < state.range(0); i++){
-      splitOnCols.push_back(i);
+        splitOnCols.push_back(i);
     }
     vector<SlicedTable> subTable(table.splitOn(splitOnCols));
-    vector<SlicedTable>:: iterator itr;
+    // vector<SlicedTable>:: iterator itr;
     // cout<<"start iteration"<<endl;
     // for (itr = subTable.begin(); itr != subTable.end(); itr++)
     // {
-    //   cout<<itr->toString()<<endl;
+    //     cout<<itr->toString()<<endl;
     // }
 
     // delete subTable;

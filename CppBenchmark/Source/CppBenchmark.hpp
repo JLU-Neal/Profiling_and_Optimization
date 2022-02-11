@@ -13,10 +13,10 @@ class SlicedTable
 private:
     /* data */
     string sliceName;
-    vector<int>* groupedRows;
+    vector<vector<int>*>* groupedRows;
 public:
     SlicedTable();
-    SlicedTable(string sliceName, vector<int>* groupedRows);
+    SlicedTable(string sliceName, vector<vector<int>*>& groupedRows);
     SlicedTable(const SlicedTable& stb);
     string toString();
     ~SlicedTable();
@@ -27,7 +27,9 @@ class Table
 private:
     /* data */
     vector<vector<int>>* table;
+
 public:
+    friend class SlicedTable;
     Table();
     Table(vector<vector<int>>* table);
     void addRow(vector<int> row);
@@ -35,7 +37,3 @@ public:
     vector<SlicedTable> splitOn(vector<int>& cols);
     ~Table();
 };
-
-
-
-
