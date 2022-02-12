@@ -17,7 +17,7 @@ MyBenchmark.testMethod       2     100  avgt    5    27247.357 ±  1932.197  ns/
 MyBenchmark.testMethod       2    1000  avgt    5   250527.574 ± 14913.931  ns/op
 MyBenchmark.testMethod       2   10000  avgt    5  2500189.571 ± 94301.105  ns/op
 
-
+     
 -----------------------------------------------------------------
 Benchmark                       Time             CPU   Iterations
 -----------------------------------------------------------------
@@ -29,3 +29,27 @@ DummyBenchmark/2/10          2247 ns         2247 ns       311194
 DummyBenchmark/2/100        15297 ns        15297 ns        45517
 DummyBenchmark/2/1000      142263 ns       142248 ns         4977
 DummyBenchmark/2/10000    1402974 ns      1402914 ns          495
+
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations
+-----------------------------------------------------------------
+DummyBenchmark/1/10          1011 ns         1011 ns       654331
+DummyBenchmark/1/100         4394 ns         4394 ns       160800
+DummyBenchmark/1/1000       35410 ns        35410 ns        20031
+DummyBenchmark/1/10000     341664 ns       341663 ns         2051
+DummyBenchmark/2/10          1174 ns         1174 ns       618786
+DummyBenchmark/2/100         5486 ns         5486 ns       129803
+DummyBenchmark/2/1000       46250 ns        46248 ns        14610
+DummyBenchmark/2/10000     458090 ns       458088 ns         1456
+
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations
+-----------------------------------------------------------------
+DummyBenchmark/1/10          1353 ns         1353 ns       508476
+DummyBenchmark/1/100         5489 ns         5489 ns       125086
+DummyBenchmark/1/1000       44451 ns        44448 ns        15761
+DummyBenchmark/1/10000     436295 ns       436288 ns         1596
+DummyBenchmark/2/10          1636 ns         1636 ns       457938
+DummyBenchmark/2/100         8414 ns         8414 ns        83448
+DummyBenchmark/2/1000       73361 ns        73360 ns         9531
+DummyBenchmark/2/10000     713629 ns       713626 ns          980
