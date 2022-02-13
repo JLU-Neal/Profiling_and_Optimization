@@ -15,6 +15,33 @@ I determined the Hotspots simply by its percentage of CPU time. Function splitOn
 
 Task 2:
 
+
+Benchmark               (cols)  (colsToBeSplitedOn)  (rows)  Mode  Cnt         Score         Error  Units
+MyBenchmark.testMethod       1                    1      10  avgt    5      1956.592 ±      85.380  ns/op
+MyBenchmark.testMethod       1                    1     100  avgt    5     15715.194 ±     476.874  ns/op
+MyBenchmark.testMethod       1                    1    1000  avgt    5    155006.353 ±    4668.701  ns/op
+MyBenchmark.testMethod       1                    1   10000  avgt    5   1556853.175 ±   65018.873  ns/op
+MyBenchmark.testMethod      10                    1      10  avgt    5      1937.535 ±      76.429  ns/op
+MyBenchmark.testMethod      10                    1     100  avgt    5     16976.380 ±     498.744  ns/op
+MyBenchmark.testMethod      10                    1    1000  avgt    5    156262.307 ±    6007.853  ns/op
+MyBenchmark.testMethod      10                    1   10000  avgt    5   1549684.001 ±   50775.235  ns/op
+MyBenchmark.testMethod      10                   10      10  avgt    5     10763.582 ±     259.417  ns/op
+MyBenchmark.testMethod      10                   10     100  avgt    5     91422.329 ±    2508.450  ns/op
+MyBenchmark.testMethod      10                   10    1000  avgt    5    943973.499 ±   64063.670  ns/op
+MyBenchmark.testMethod      10                   10   10000  avgt    5   9374622.599 ±  645618.858  ns/op
+MyBenchmark.testMethod     100                    1      10  avgt    5      2039.938 ±      63.332  ns/op
+MyBenchmark.testMethod     100                    1     100  avgt    5     15800.039 ±     634.772  ns/op
+MyBenchmark.testMethod     100                    1    1000  avgt    5    158022.644 ±    7730.412  ns/op
+MyBenchmark.testMethod     100                    1   10000  avgt    5   1523966.399 ±   60603.023  ns/op
+MyBenchmark.testMethod     100                   10      10  avgt    5     11068.935 ±     417.180  ns/op
+MyBenchmark.testMethod     100                   10     100  avgt    5     92321.274 ±    2481.472  ns/op
+MyBenchmark.testMethod     100                   10    1000  avgt    5    918346.190 ±   18276.698  ns/op
+MyBenchmark.testMethod     100                   10   10000  avgt    5   9028419.093 ±  127988.279  ns/op
+MyBenchmark.testMethod     100                  100      10  avgt    5    204744.664 ±    9309.768  ns/op
+MyBenchmark.testMethod     100                  100     100  avgt    5    995822.051 ±   19725.939  ns/op
+MyBenchmark.testMethod     100                  100    1000  avgt    5   9132743.018 ±  301897.939  ns/op
+MyBenchmark.testMethod     100                  100   10000  avgt    5  90630884.412 ± 2018784.434  ns/op
+
 To reproduce the behaviour of the function without overhead, we directly call the function splitOn based on an existing table which is initialized by a @Setup function.
 
 

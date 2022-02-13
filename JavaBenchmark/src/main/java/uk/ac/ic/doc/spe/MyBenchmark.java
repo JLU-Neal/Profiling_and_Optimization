@@ -67,8 +67,15 @@ public class MyBenchmark {
     @Param({"10", "100", "1000", "10000"})
     public int rows;
 
-    @Param({"1", "2"})
+
+    @Param({"1", "10", "100"})
     public int cols;
+
+    @Param({"1", "10", "100"})
+    public int colsToBeSplitedOn;
+
+    // @Param({"1", "10", "100"})
+    // public int colsToBeSplitedOn;
 
     @Setup
     public void setUp(){
@@ -77,21 +84,25 @@ public class MyBenchmark {
             System.out.println("Repeat param: " + rows);
             Random random = new Random();
 
-            int[] repeatedAnimals = new int[rows];
-            int[] repeatedAges = new int[rows];
+            int[] numbers = new int[rows];
+            // int[] repeatedAges = new int[rows];
             for(int i = 0 ; i < rows; i++){
                 // repeatedAnimals[i] = random.nextInt();
-                repeatedAnimals[i] = i % 2;
-                repeatedAges[i] = i % 3;
+                numbers[i] = i % 2;
+                // repeatedAges[i] = i % 3;
             }
-            System.out.println("Array Length: "+repeatedAnimals.length);
+            System.out.println("Array Length: "+numbers.length);
 
-            input = Table.create("Cute Animals")
-                    .addColumns(
-                            IntColumn.create(colsName[0], repeatedAnimals)
-                    ).addColumns(
-                            IntColumn.create(colsName[1], repeatedAges)
-                    );
+            input = Table.create("Some Table");
+                    // .addColumns(
+                    //         IntColumn.create(colsName[0], numbers)
+                    // ).addColumns(
+                    //         IntColumn.create(colsName[1], repeatedAges)
+                    // );
+            for(int i = 0; i < this.cols; i++){
+                input.addColumns(IntColumn.create(String.valueOf(i), numbers));
+            }
+            
             
 
         }catch(Exception exception){
@@ -106,9 +117,9 @@ public class MyBenchmark {
     }
     @Benchmark
     public void testMethod() {
-        String[] colums = new String[this.cols];
-        for(int i = 0; i < this.cols; i++){
-            colums[i] = colsName[i];
+        String[] colums = new String[this.colsToBeSplitedOn];
+        for(int i = 0; i < this.colsToBeSplitedOn; i++){
+            colums[i] = String.valueOf(i);
         }
         TableSliceGroup ret = input.splitOn(colums);
         // System.out.println("=====]====================");
