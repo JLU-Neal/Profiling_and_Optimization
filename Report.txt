@@ -9,4 +9,30 @@ itable stub	[Dynamic code]	0.732s	2.7%
 tech::tablesaw::columns::dates::DateColumnFormatter::format	[Compiled Java code]	0.694s	2.5%
 [Others]	N/A*	21.673s	79.2%
 
-I determined the Hotspots simply by its percentage of CPU time.
+I determined the Hotspots simply by its percentage of CPU time. Function splitOn comprises the majority of the runtime.  
+
+
+
+Task 2:
+
+To reproduce the behaviour of the function without overhead, we directly call the function splitOn based on an existing table which is initialized by a @Setup function.
+
+
+Since the splitOn function will iterate every row of the table, so a hypothesis could be stated as:
+
+The running time will increase linearly as the number of the rows in table and the number of colums which would be split on (not the number of columns) grow.
+
+T = O(Rows * ColsToBeSplittedOn)
+
+The hypothesis could be validated from the result of the performance.
+
+
+
+
+
+Task 3:
+
+
+From the result we can see our C++ implementation is more than 3 times faster than its java counterpart!
+
+
