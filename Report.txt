@@ -1,12 +1,81 @@
 Task 1:
-hot sections of code: 
 
-Function	Module	CPU Time	% of CPU Time
-tech::tablesaw::joining::DataFrameJoiner::crossProduct	[Compiled Java code]	1.652s	6.0%
-tech::tablesaw::table::StandardTableSliceGroup::splitOn	[Compiled Java code]	1.544s	5.6%
-Interpreter	[Dynamic code]	1.075s	3.9%
-itable stub	[Dynamic code]	0.732s	2.7%
-tech::tablesaw::columns::dates::DateColumnFormatter::format	[Compiled Java code]	0.694s	2.5%
-[Others]	N/A*	21.673s	79.2%
+Top Hotspots:
+Function	                                            Module              	CPU Time
+tech::tablesaw::table::StandardTableSliceGroup::splitOn	[Compiled Java code]	2.227s
+tech::tablesaw::joining::DataFrameJoiner::crossProduct	[Compiled Java code]	1.742s
+...
 
-I determined the Hotspots simply by its percentage of CPU time.
+
+I used hardware event-based sampling, which is supposed to be more accurate, deterministic semantic and low noise (according to the Intel, the average overhead of event-based sampling is about 2% on a 1ms sampling interval.) 
+I determined the Hotspots simply by its CPU time. Function tech::tablesaw::table::StandardTableSliceGroup::splitOn comprises the majority of the runtime.  
+
+
+
+Task 2:
+
+
+Benchmark               (cols)  (colsToBeSplitedOn)  (rows)  Mode  Cnt         Score         Error  Units
+
+variable: rows
+MyBenchmark.testMethod       1                    1      10  avgt    5      1956.592 ±      85.380  ns/op
+MyBenchmark.testMethod       1                    1     100  avgt    5     15715.194 ±     476.874  ns/op
+MyBenchmark.testMethod       1                    1    1000  avgt    5    155006.353 ±    4668.701  ns/op
+MyBenchmark.testMethod       1                    1   10000  avgt    5   1556853.175 ±   65018.873  ns/op
+
+variable: cols
+MyBenchmark.testMethod      10                    1      10  avgt    5      1937.535 ±      76.429  ns/op
+MyBenchmark.testMethod     100                    1      10  avgt    5      2039.938 ±      63.332  ns/op
+
+variable: colsToBeSplitedOn
+MyBenchmark.testMethod     100                   10      10  avgt    5     11068.935 ±     417.180  ns/op
+MyBenchmark.testMethod     100                  100      10  avgt    5    204744.664 ±    9309.768  ns/op
+
+
+To reproduce the behaviour of the function without overhead, we directly call the function splitOn based on an existing table which is initialized by a @Setup function.
+
+
+Since the splitOn function will iterate every row of the table, so it is intuitively that the excecution time would increase linearly as the number of the rows growing.
+However, my hypothesis on the impact of columns could be some how counterintuitive: I think the performance of benchmark would not change a lot by simply scale up the number of columns, what really matter to the performance is the number of columns which will be splitted on.
+In detail, I think the number of colums to be splitted on would determine the "workload" of each row during the iteration (to generate the key for hashmap), while rest of the columns would not since the whole row would be simply referenced in the value of the hashmap.
+
+so a hypothesis could be stated as:
+
+The running time will increase linearly as the number of the rows in table and the number of colums which would be split on (not the number of columns) grow.
+
+in the form of simple characteristic equation:
+
+T_exe = O(Rows * ColsToBeSplittedOn)
+
+where T-exe denote the excecution time of the benchmark, O(.) is the big O notation, Rows is the number of the rows of the table, ColsToBeSplittedOn is the number of the columns to be splitted on. 
+
+The hypothesis could be validated from the result of the performance. 
+
+When the only variable is rows, the T_exe grows linearly as rows scaling up;
+
+When the only variable is cols, there is no significant changes of T_exe as cols scaling up;
+
+When the only variable is colsToBeSplitedOn, the T_exe also grow linearly as it scaling up;
+
+
+
+
+Task 3:
+
+-----------------------------------------------------------------
+Benchmark                       Time             CPU   Iterations   Percentage of Java counterpart
+-----------------------------------------------------------------   
+DummyBenchmark/1/10          1353 ns         1353 ns       508476   69.1%
+DummyBenchmark/1/100         5489 ns         5489 ns       125086   34.9%
+DummyBenchmark/1/1000       44451 ns        44448 ns        15761   28.6%
+DummyBenchmark/1/10000     436295 ns       436288 ns         1596   28.0%
+(Here we only focus on the impace of number of rows, while the colsToBeSplitedOn is set to 1)
+
+
+From the performance of our C++ implementation, it can be noticed that the percentage of C++ implementation excecution time to its Java counterpart is getting slower while the number of row scaling up.
+
+This could be explained that when the rows is reletive smaller, higher percentage of time would be spent to deal with some overhead.
+
+
+
+
