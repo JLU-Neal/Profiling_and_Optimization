@@ -117,8 +117,9 @@ public class MyBenchmark {
     }
     @Benchmark
     public void testMethod() {
-        String[] colums = new String[this.colsToBeSplitedOn];
-        for(int i = 0; i < this.colsToBeSplitedOn; i++){
+        int min = Math.min(this.colsToBeSplitedOn, this.cols);
+        String[] colums = new String[min];
+        for(int i = 0; i < min; i++){
             colums[i] = String.valueOf(i);
         }
         TableSliceGroup ret = input.splitOn(colums);
