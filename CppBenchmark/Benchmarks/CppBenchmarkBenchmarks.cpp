@@ -6,7 +6,6 @@ using namespace std;
 
 static Table table;
 
-static int cnt = 0;
 
 static void DoSetup(const benchmark::State& state) {
   table = Table();
@@ -29,22 +28,15 @@ static void DoSetup(const benchmark::State& state) {
 
 static void DummyBenchmark(benchmark::State& state) {
   for (auto _ : state){
-    // cout<<cnt<<endl;
-    // cnt++;
+   
     vector<int> splitOnCols;
     for(int i = 0; i < state.range(0); i++){
-      splitOnCols.push_back(i);
+        splitOnCols.push_back(i);
     }
-    vector<SlicedTable> subTable(table.splitOn(splitOnCols));
-    vector<SlicedTable>:: iterator itr;
-    // cout<<"start iteration"<<endl;
-    // for (itr = subTable.begin(); itr != subTable.end(); itr++)
-    // {
-    //   cout<<itr->toString()<<endl;
-    // }
+    const SlicedTableGroup& ret = table.splitOn(splitOnCols);
+    // cout<<ret.toString()<<endl;
 
-    // delete subTable;
-    // delete itr;
+  
   }
   
 }
