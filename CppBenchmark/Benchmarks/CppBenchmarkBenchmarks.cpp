@@ -6,7 +6,9 @@ using namespace std;
 
 static Table table;
 
-
+/*
+Table would be initialized once for each state
+*/
 static void DoSetup(const benchmark::State& state) {
   table = Table();
   // cout<<"SETUP"<<endl;

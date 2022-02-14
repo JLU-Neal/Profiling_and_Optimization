@@ -53,7 +53,7 @@ Scan the rows iteratively, for each row, generate a key (represents a subtable)
 for the element of the columns which are splitted on.
 Based on this key, the pointer of current row would be added to
 an existing vector related to the key (if not exist then construct it first).
-Return all the subtable (wrapped by SlicedTableGroup).
+Return all the subtable stored in the hashmap(wrapped by SlicedTableGroup).
 */
 SlicedTableGroup Table::splitOn(vector<int>& cols)
 {
