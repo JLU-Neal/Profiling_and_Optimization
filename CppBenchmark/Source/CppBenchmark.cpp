@@ -4,7 +4,11 @@
 using namespace std;
 
 static vector<string> smallNumbers{"0", "1", "2", "3", "4", "5", "6"};
-
+/*
+A bottle neck is detected when I use stringstream or to_string() to convert int to string。
+So here I define a simple but efficient mapping from integer to string.
+Warning: Now only limited integers are supported!
+*/
 const string& smallIntToString(unsigned int val) {
     return smallNumbers[val < smallNumbers.size() ? val : 0];
 }
@@ -43,6 +47,14 @@ string Table::toString(){
     return ss.str();
 }
 
+
+/*
+Scan the rows iteratively, for each row, generate a key (represents a subtable)
+for the element of the columns which are splitted on.
+Based on this key, the pointer of current row would be added to
+an existing vector related to the key (if not exist then construct it first).
+Return all the subtable (wrapped by SlicedTableGroup).
+*/
 SlicedTableGroup Table::splitOn(vector<int>& cols)
 {
     unordered_map<string, vector<vector<int>*>> subTables;
